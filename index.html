@@ -1550,6 +1550,23 @@
       repeating-linear-gradient(0deg, rgba(90,50,30,.04) 0 1px, transparent 1px 3px),
       repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 1px, transparent 1px 3px),
       linear-gradient(#faf0df, #ecdcc2 70%, #e3cfb1); }
+  
+    /* ===== v13: amplop kraft ornamen + 3D (referensi) ===== */
+    .en { --pn: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27240%27%20height%3D%27240%27%3E%3Cfilter%20id%3D%27a%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.85%27%20numOctaves%3D%273%27%20seed%3D%277%27/%3E%3CfeColorMatrix%20values%3D%270%200%200%200%20.28%200%200%200%200%20.18%200%200%200%200%20.08%200%200%200%20.6%20-.14%27/%3E%3C/filter%3E%3Crect%20width%3D%27240%27%20height%3D%27240%27%20filter%3D%27url%28%23a%29%27/%3E%3C/svg%3E"); --pb: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27400%27%20height%3D%27400%27%3E%3Cfilter%20id%3D%27a%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.011%20.02%27%20numOctaves%3D%273%27%20seed%3D%273%27/%3E%3CfeColorMatrix%20values%3D%270%200%200%200%20.45%200%200%200%200%20.3%200%200%200%200%20.14%200%200%200%20.55%20-.12%27/%3E%3C/filter%3E%3Crect%20width%3D%27400%27%20height%3D%27400%27%20filter%3D%27url%28%23a%29%27/%3E%3C/svg%3E");
+      width: min(90vw, 480px); aspect-ratio: 7 / 4; animation: envFloat 7s ease-in-out infinite alternate; }
+    @keyframes envFloat { from { translate: 0 0; rotate: 0 1 0 -2.5deg; } to { translate: 0 -7px; rotate: 0 1 0 2.5deg; } }
+    .en-stage:has(.en.open) { padding-top: calc(34px + min(90vw, 480px) * .31); }
+    .en::after { background: linear-gradient(135deg, rgba(255,255,255,.22), transparent 38%, transparent 62%, rgba(40,20,5,.2)); }
+    .en-back { background: linear-gradient(#37080e, #6d1a25); box-shadow: inset 0 22px 28px rgba(0,0,0,.5), 0 26px 50px rgba(10,0,2,.55), 0 4px 0 #8d6f48; }
+    .en-front .pl { background: var(--pn), var(--pb), linear-gradient(100deg, #dcc7a4 8%, #cdb189 70%, #b99a6f); }
+    .en-front .pr { background: var(--pn), var(--pb), linear-gradient(260deg, #dcc7a4 8%, #cdb189 70%, #b99a6f); }
+    .en-front .pb { background: var(--pn), var(--pb), linear-gradient(0deg, #d6bd97, #c6a97f); }
+    .ff { background: #8f7250; }
+    .ff i { background: var(--pn), var(--pb), linear-gradient(#e0cba8, #d1b68d 72%, #c2a57a); }
+    .en-orn { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 6; pointer-events: none; overflow: visible; transition: translate .85s cubic-bezier(.5,0,.8,.5), opacity .6s ease; }
+    .en-orn .o-top { transition: opacity .25s ease; } .en.open .en-orn .o-top { opacity: 0; }
+    .en.read .en-orn { translate: 0 75vh; opacity: 0; }
+    .seal { width: 23%; }
   </style>
 </head>
 
@@ -1612,6 +1629,7 @@
         </div>
         <div class="en-front"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div>
         <div class="en-fsh"><i></i></div>
+        <svg class='en-orn' viewBox='0 0 700 400' preserveAspectRatio='none' aria-hidden='true'><defs><symbol id='enc' viewBox='0 0 120 110' overflow='visible'><g fill='none' stroke='#3b2314' stroke-linecap='round' stroke-linejoin='round'><path stroke-width='2.6' d='M8 10C40 4 70 8 92 24C104 33 100 48 88 47C78 46 77 34 87 33'/><path stroke-width='2.6' d='M10 8C4 40 8 70 24 92C33 104 48 100 47 88C46 78 34 77 33 87'/><path stroke-width='2.2' d='M16 16C32 26 46 40 58 62C63 72 56 82 48 78C42 75 44 66 51 67'/><path stroke-width='2.2' d='M16 16C26 32 40 46 62 58C72 63 82 56 78 48C75 42 66 44 67 51'/><path stroke-width='1.2' d='M52 12C58 4 70 6 70 14C70 20 62 20 61 15M12 52C4 58 6 70 14 70C20 70 20 62 15 61M30 30C40 30 46 24 44 18M30 30C30 40 24 46 18 44'/><path stroke-width='1.2' d='M100 52C106 58 106 68 98 70M52 100C58 106 68 106 70 98'/></g><g fill='#3b2314'><path d='M70 14C78 5 92 8 95 17C85 20 77 20 70 14Z'/><path d='M14 70C5 78 8 92 17 95C20 85 20 77 14 70Z'/><path d='M60 40C70 36 78 40 80 48C70 50 64 48 60 40Z'/><path d='M40 60C36 70 40 78 48 80C50 70 48 64 40 60Z'/><circle cx='96' cy='38' r='2.4'/><circle cx='38' cy='96' r='2.4'/><circle cx='20' cy='20' r='3'/><circle cx='66' cy='66' r='2'/></g></symbol><symbol id='enm' viewBox='-16 -12 32 24' overflow='visible'><g fill='#3b2314' stroke='#3b2314' stroke-linecap='round'><path stroke='none' d='M0 -10C4 -5 4 5 0 10C-4 5 -4 -5 0 -10Z'/><path fill='none' stroke-width='1.6' d='M0 2C-8 -7 -15 -3 -13 4C-10 1 -5 1 0 6M0 2C8 -7 15 -3 13 4C10 1 5 1 0 6'/><circle r='1.6' cy='-12' stroke='none'/></g></symbol></defs><g fill='none' stroke='#3b2314' opacity='.88' vector-effect='non-scaling-stroke'><path class='o-top' vector-effect='non-scaling-stroke' stroke-width='1.1' d='M16 16H684M22 22H678'/><path vector-effect='non-scaling-stroke' stroke-width='1.1' d='M16 16V384H684V16'/><path vector-effect='non-scaling-stroke' stroke-width='.7' d='M22 22V378H678V22'/></g><g opacity='.9'><use href='#enc' x='16' y='16' width='120' height='110'/><use href='#enc' x='16' y='16' width='120' height='110' transform='translate(700 0) scale(-1 1)'/><use href='#enc' x='16' y='16' width='120' height='110' transform='translate(0 400) scale(1 -1)'/><use href='#enc' x='16' y='16' width='120' height='110' transform='translate(700 400) scale(-1 -1)'/><use class='o-top' href='#enm' x='334' y='4' width='32' height='24'/><use href='#enm' x='334' y='372' width='32' height='24' transform='translate(700 400) rotate(180) translate(-0 0)' style='display:none'/><use href='#enm' x='334' y='372' width='32' height='24'/><use href='#enm' x='4' y='188' width='32' height='24' transform='rotate(-90 20 200)'/><use href='#enm' x='664' y='188' width='32' height='24' transform='rotate(90 680 200)'/></g></svg>
         <div class="en-flap"><div class="ff"><i></i></div><div class="fb"><i></i></div><div class="seal"></div></div>
       </div>
     </div>
@@ -1704,7 +1722,7 @@
 
   <footer>
     <em>Selamat Hari Guru Nasional 2026!</em>
-    Copyright © 2026 SMA FIBBIS &amp; SMPIT FIBS All Rights Reserved.
+    © 2026 SMA FIBBIS &amp; SMPIT FIBS — Guru Hebat, Indonesia Kuat.
   </footer>
 
   <!-- FULLSCREEN LETTER MODAL -->
