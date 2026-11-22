@@ -1416,15 +1416,28 @@
     .ff { filter: drop-shadow(0 6px 6px rgba(50,8,14,.32)); } .fb { transform: rotateX(180deg); }
     .ff i, .fb i { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
     .ff i { background: linear-gradient(#f8eddc, #ead8bd); } .fb i { background: linear-gradient(0deg, #5a1119, #7a1f2b); }
-    .seal { position: absolute; left: 50%; top: 100%; width: 15%; aspect-ratio: 1; transform: translate(-50%, -50%); display: grid; place-items: center;
-      border-radius: 47% 53% 50% 50% / 52% 46% 54% 48%; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-      background: radial-gradient(circle at 35% 30%, #c9414d, #8c1c2a 55%, #4d0a13); box-shadow: 0 5px 10px rgba(30,2,6,.5), inset 0 0 0 3px rgba(255,200,190,.12), inset 0 -3px 5px rgba(0,0,0,.3); }
-    .seal::before { content: ''; position: absolute; inset: 16%; border-radius: 50%; border: 1.5px solid rgba(240,207,138,.55); }
-    .seal span { font: 400 1.7rem/1 'Pinyon Script', cursive; color: #f0cf8a; text-shadow: 0 1px 0 rgba(0,0,0,.4), 0 0 6px rgba(240,207,138,.4); }
+    .seal { position: absolute; left: 50%; top: 100%; width: 18%; aspect-ratio: 1; transform: translate(-50%, -50%) translateZ(6px); display: grid; place-items: center;
+      border-radius: 48% 52% 46% 54% / 54% 47% 53% 46%; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      background:
+        radial-gradient(ellipse at 32% 24%, rgba(255,160,145,.72) 0 4%, transparent 18%),
+        radial-gradient(circle at 38% 34%, #ce5260 0, #9f2736 52%, #620e19 82%, #3b070d 100%);
+      box-shadow:
+        0 8px 12px rgba(30,2,6,.58),
+        0 2px 3px rgba(255,180,165,.32) inset,
+        3px 5px 6px rgba(55,5,10,.34) inset,
+        -3px -4px 5px rgba(255,126,115,.18) inset,
+        0 0 0 2px rgba(75,8,15,.24);
+      border: 1px solid rgba(255,150,145,.18); }
+    .seal::before { content: ''; position: absolute; inset: 16%; border-radius: 50%; border: 1.5px solid rgba(255,205,175,.42);
+      box-shadow: 0 1px 2px rgba(255,220,190,.22) inset, 0 1px 2px rgba(40,3,8,.38); }
+    .seal::after { content: ''; position: absolute; inset: 7%; border-radius: 50%; border: 1px solid rgba(62,6,12,.22);
+      box-shadow: 0 0 0 2px rgba(224,92,82,.12), inset 0 0 5px rgba(40,3,8,.18); }
+    .seal-mark { position: relative; z-index: 2; width: 64%; height: 64%; filter: drop-shadow(0 2px 1px rgba(43,4,9,.55)); }
   
     /* ===== v6: sparkle, taman tulip, amplop ala video ===== */
-    .ci-title { position: relative; } .ci-title::before { content: ''; position: absolute; inset: -14px -34px; z-index: -1; background: radial-gradient(ellipse, rgba(50,8,14,.55), transparent 70%); }
-    .ci-title .l2, .ci-sub, .ci-go { text-shadow: 0 2px 14px rgba(30,4,8,.9); }
+    .ci-title { position: relative; } .ci-title::before { content: none; }
+    .ci-title .l2 { text-shadow: 0 3px 0 rgba(30,4,8,.65), 0 5px 8px rgba(30,4,8,.55); }
+    .ci-sub, .ci-go { text-shadow: 0 2px 14px rgba(30,4,8,.9); }
     .ci-sp { position: absolute; z-index: 6; pointer-events: none; fill: var(--peach-glow); opacity: 0; filter: drop-shadow(0 0 6px rgba(254,215,184,.85)); }
     .ci.s-mark .ci-sp { opacity: 1; animation: ciTw 2.6s ease-in-out calc(var(--k)*.35s) infinite; }
     @keyframes ciTw { 0%,100% { transform: scale(.35) rotate(0); opacity: .25; } 50% { transform: scale(1) rotate(45deg); opacity: 1; } }
@@ -1488,7 +1501,7 @@
     .top-nav { top: max(12px, env(safe-area-inset-top)); }
     .ci-title .l1 { background: linear-gradient(100deg, #fed7b8 0%, #fff6e8 38%, #f0cf8a 52%, #fed7b8 100%); background-size: 250% 100%;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; text-shadow: none;
-      filter: drop-shadow(0 3px 14px rgba(254,215,184,.4)); animation: shim 4.5s linear infinite; }
+      filter: none; animation: shim 4.5s linear infinite; }
     @keyframes shim { from { background-position: 120% 0; } to { background-position: -130% 0; } }
     .ci-card::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 3; border-radius: inherit;
       background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.7) 50%, transparent 62%); transform: translateX(-130%); }
@@ -1504,10 +1517,12 @@
       @media (max-height: 520px) { .ci-go { display: none; } }
   
     /* ===== v9: judul di atas kalender, tombol di bawah kalender, amplop di antara judul & bunga ===== */
+    .ci-stage { top: 8px; }
+    .ci-box { top: 32px; }
     .ci-title { margin: 0 0 4px; min-height: 0; } .ci-eyebrow { margin-bottom: 10px; }
     .ci.s-head .ci-eyebrow, .ci.s-head .ci-sub { opacity: 1; transform: none; }
     .ci.s-head .ci-title .mk > span { transform: none; } .ci.s-head .ci-title .mk:nth-child(2) > span { transition-delay: .14s; }
-    .ci-go { position: relative; left: auto; bottom: auto; transform: translateY(10px); margin-top: 10px; }
+    .ci-go { position: relative; left: auto; bottom: auto; transform: translateY(10px); margin-top: 42px; }
     .ci.s-title .ci-go { transform: none; }
     @media (max-height: 740px) { .ci { min-height: 100svh; padding: 56px 16px 40px; } .ci-stage { zoom: .9; } }
     @media (max-height: 660px) { .ci-stage { zoom: .78; } }
@@ -1596,7 +1611,22 @@
         </div>
         <div class="en-front"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div>
         <div class="en-fsh"><i></i></div>
-        <div class="en-flap"><div class="ff"><i></i></div><div class="fb"><i></i></div><div class="seal"><span>G</span></div></div>
+        <div class="en-flap"><div class="ff"><i></i></div><div class="fb"><i></i></div><div class="seal" aria-label="Segel bunga"><svg class="seal-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <linearGradient id="sealPetal" x1="20" y1="10" x2="80" y2="90" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f0d7a5"/><stop offset=".55" stop-color="#d3a957"/><stop offset="1" stop-color="#9d7432"/>
+            </linearGradient>
+          </defs>
+          <g fill="url(#sealPetal)" stroke="#8b652e" stroke-width="1.2" stroke-linejoin="round">
+            <ellipse cx="50" cy="27" rx="10" ry="18" transform="rotate(0 50 50)"/>
+            <ellipse cx="50" cy="27" rx="10" ry="18" transform="rotate(72 50 50)"/>
+            <ellipse cx="50" cy="27" rx="10" ry="18" transform="rotate(144 50 50)"/>
+            <ellipse cx="50" cy="27" rx="10" ry="18" transform="rotate(216 50 50)"/>
+            <ellipse cx="50" cy="27" rx="10" ry="18" transform="rotate(288 50 50)"/>
+          </g>
+          <circle cx="50" cy="50" r="11" fill="#a9833d" stroke="#f0d7a5" stroke-width="2"/>
+          <circle cx="50" cy="50" r="4" fill="#f1dfad"/>
+        </svg></div></div>
       </div>
     </div>
 
@@ -1656,13 +1686,6 @@
         </video>
       </div>
 
-      <div class="video-footer-bar">
-        <span>🎬 Video Persembahan Siswa SMA FIBBIS &amp; SMPIT FIBS</span>
-        <label class="upload-video-label" for="videoFileInput">
-          📁 Pilih File Video Lokal
-          <input type="file" id="videoFileInput" accept="video/*" hidden>
-        </label>
-      </div>
     </div>
   </section>
 
@@ -2168,7 +2191,6 @@
     var videoCover = document.getElementById('videoCover');
     var mgSeqIntro = document.getElementById('mgSeqIntro');
     var tributeVideo = document.getElementById('tributeVideo');
-    var videoFileInput = document.getElementById('videoFileInput');
 
     if (playVideoBtn && videoCover && mgSeqIntro && tributeVideo) {
       playVideoBtn.addEventListener('click', function () {
@@ -2179,24 +2201,6 @@
           mgSeqIntro.classList.remove('active');
           tributeVideo.play().catch(function () {});
         }, 1600);
-      });
-    }
-
-    if (videoFileInput && tributeVideo) {
-      videoFileInput.addEventListener('change', function (e) {
-        var file = e.target.files && e.target.files[0];
-        if (!file) return;
-        var url = URL.createObjectURL(file);
-        tributeVideo.src = url;
-        tributeVideo.load();
-        if (videoCover) videoCover.classList.add('hidden');
-        if (mgSeqIntro) {
-          mgSeqIntro.classList.add('active');
-          setTimeout(function () {
-            mgSeqIntro.classList.remove('active');
-            tributeVideo.play().catch(function () {});
-          }, 1500);
-        }
       });
     }
 
