@@ -1516,6 +1516,24 @@
     .garden-showcase { display: flex; flex-direction: column; align-items: center; min-height: max(100svh, 720px); padding-bottom: clamp(170px, 24svh, 260px); }
     .en-stage { flex: 1 1 auto; width: 100%; align-items: center; padding: 150px 0 10px; }
     .gd.sec { width: clamp(100px, 16vw, 150px); }
+  
+    /* ===== v10: konten landing lebih ke atas, amplop dekat judul, frame video tidak gepeng ===== */
+    .ci { align-items: flex-start; padding-top: calc(56px + env(safe-area-inset-top, 0px)); }
+    @media (min-width: 900px) { .ci { align-items: center; padding: 40px 20px 110px; } }
+    @media (max-height: 520px) { .ci { padding-top: 28px; } }
+
+    .garden-showcase { min-height: 0; } .garden-showcase .sec-sub { margin-bottom: 6px; }
+    .en-stage { flex: 0 0 auto; padding: 34px 0 10px; transition: padding-top .7s cubic-bezier(.22,1,.36,1) .3s; }
+    .en-stage:has(.en.open) { padding-top: calc(34px + min(86vw, 440px) * .36); }
+    .env-status-hint { margin-top: 28px; }
+
+    .video-viewport { aspect-ratio: var(--vr, 16/9); }
+    .tribute-video { object-fit: contain; background: #000; }
+    @media (max-width: 640px) {
+      .video-viewport { aspect-ratio: var(--vr, 4/5); max-height: 80svh; border-radius: 16px; }
+      .cinema-stage { padding: 10px; border-radius: 24px; }
+      .video-footer-bar { justify-content: center; text-align: center; }
+    }
   </style>
 </head>
 
@@ -2283,6 +2301,13 @@
     }
 
     renderWishes();
+  
+    /* Frame video menyesuaikan rasio video asli (portrait/landscape), tidak gepeng di HP */
+    (function () {
+      var v = document.getElementById('tributeVideo'), vp = document.querySelector('.video-viewport'); if (!v || !vp) return;
+      function fit() { if (v.videoWidth && v.videoHeight) vp.style.setProperty('--vr', Math.min(1.78, Math.max(.5625, v.videoWidth / v.videoHeight)).toFixed(3)); }
+      v.addEventListener('loadedmetadata', fit); if (v.readyState >= 1) fit();
+    })();
   </script>
 </body>
 
