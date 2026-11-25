@@ -4419,6 +4419,10 @@
       <button class="vclose" id="vClose" type="button" aria-label="Tutup video">✕</button>
       <div class="vframe"><iframe id="vFrame" title="Video persembahan untuk guru" allow="autoplay; fullscreen"
           allowfullscreen></iframe>
+        <div class="vmsg" id="vMsg" hidden>
+          <p>Link Google Drive belum diisi.<br>Buka file HTML, cari <b>data-drive-url</b>, lalu tempel link video dari
+            Google Drive.</p>
+        </div>
       </div>
       <p class="vhint">Ketuk ikon layar penuh ⛶ di pojok video untuk menonton lebih besar.</p>
       <a class="vlink" id="vLink" target="_blank" rel="noopener" hidden>Buka di Google Drive ↗</a>
@@ -4947,8 +4951,11 @@
     }, { passive: true });
 
     /* ============================================================
-       6. GUESTBOOK / UCAPAN & DOA (TANPA PERAN / KELAS)
+       6. GUESTBOOK / UCAPAN & DOA (TERHUBUNG KE GOOGLE SHEETS)
        ============================================================ */
+    // Tempel URL Web App Google Apps Script Anda di sini agar semua orang bisa melihat ucapan masuk:
+    var WISHES_API_URL = 'https://script.google.com/macros/s/AKfycbwaw8C-2RgByWW1SeumcUQHqW0QRw1a_g4HIH4kHns4lHdUtWhfN15Zo5MwfFP5vu6jaQ/exec';
+
     var K = 'ucapan-guru-2026-v3';
     var defaultWishes = [
       {
@@ -4961,35 +4968,38 @@
       }
     ];
 
-    function loadWishes() {
+    var currentWishes = [];
+
+    function loadLocalWishes() {
       try {
         var raw = localStorage.getItem(K);
         if (!raw) return defaultWishes.slice();
         var parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : defaultWishes.slice();
+        return Array.isArray(parsed) && parsed.length ? parsed : defaultWishes.slice();
       } catch (e) {
         return defaultWishes.slice();
       }
     }
 
-    function saveWishes(arr) {
+    function saveLocalWishes(arr) {
       try { localStorage.setItem(K, JSON.stringify(arr)); } catch (e) { }
     }
 
-    function renderWishes() {
+    function renderWishes(list) {
       var l = document.getElementById('ls');
       var countEl = document.getElementById('wishCount');
       if (!l) return;
-      var list = loadWishes();
-      if (countEl) countEl.textContent = list.length + ' Ucapan';
+      var items = Array.isArray(list) ? list : currentWishes;
+      currentWishes = items;
+      if (countEl) countEl.textContent = items.length + ' Ucapan';
       l.innerHTML = '';
 
-      if (!list.length) {
+      if (!items.length) {
         l.innerHTML = '<div class="msg-empty">Belum ada ucapan yang masuk.<br>Jadilah yang pertama mengirimkan doa untuk Bapak &amp; Ibu Guru! 🌸</div>';
         return;
       }
 
-      list.forEach(function (item) {
+      items.forEach(function (item) {
         var card = document.createElement('div');
         card.className = 'msg glass';
 
@@ -5004,6 +5014,22 @@
       });
     }
 
+    function fetchWishesFromServer() {
+      if (!WISHES_API_URL) return Promise.resolve();
+      return fetch(WISHES_API_URL, { method: 'GET', cache: 'no-store' })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.ok && Array.isArray(data.wishes)) {
+            var list = data.wishes.length ? data.wishes : defaultWishes.slice();
+            saveLocalWishes(list);
+            renderWishes(list);
+          }
+        })
+        .catch(function () {
+          // Jika offline / gagal memuat, tetap tampilkan cache lokal
+        });
+    }
+
     var formEl = document.getElementById('f');
     if (formEl) {
       formEl.addEventListener('submit', function (e) {
@@ -5012,18 +5038,61 @@
         var mVal = document.getElementById('m').value.trim();
         if (!nVal || !mVal) return;
 
-        var list = loadWishes();
-        list.unshift({ n: nVal, t: mVal });
-        saveWishes(list);
-        renderWishes();
-        formEl.reset();
+        var submitBtn = formEl.querySelector('button[type="submit"]') || formEl.querySelector('button');
+        var originalBtnText = submitBtn ? submitBtn.textContent : '';
 
-        var btnRect = formEl.querySelector('button').getBoundingClientRect();
-        spawnPetalsBurst(btnRect.left + btnRect.width / 2, btnRect.top);
+        function onSuccess(newWish) {
+          var nextList = currentWishes.slice();
+          nextList.unshift(newWish);
+          saveLocalWishes(nextList);
+          renderWishes(nextList);
+          formEl.reset();
+          if (submitBtn) {
+            var btnRect = submitBtn.getBoundingClientRect();
+            spawnPetalsBurst(btnRect.left + btnRect.width / 2, btnRect.top);
+          }
+        }
+
+        if (!WISHES_API_URL) {
+          onSuccess({ n: nVal, t: mVal });
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Mengirim...';
+        }
+
+        fetch(WISHES_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ n: nVal, t: mVal })
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (data && data.ok) {
+              onSuccess(data.wish || { n: nVal, t: mVal });
+            } else {
+              alert((data && data.error) || 'Gagal mengirim ucapan. Silakan coba lagi.');
+            }
+          })
+          .catch(function () {
+            alert('Koneksi bermasalah. Ucapan gagal dikirim ke server, silakan coba lagi.');
+          })
+          .finally(function () {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalBtnText;
+            }
+          });
       });
     }
 
-    renderWishes();
+    renderWishes(loadLocalWishes());
+    if (WISHES_API_URL) {
+      fetchWishesFromServer();
+      setInterval(fetchWishesFromServer, 30000);
+    }
 
     /* Frame video menyesuaikan rasio video asli (portrait/landscape), tidak gepeng di HP */
     (function () {
