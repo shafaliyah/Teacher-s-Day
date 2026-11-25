@@ -4957,16 +4957,7 @@
     var WISHES_API_URL = 'https://script.google.com/macros/s/AKfycbwaw8C-2RgByWW1SeumcUQHqW0QRw1a_g4HIH4kHns4lHdUtWhfN15Zo5MwfFP5vu6jaQ/exec';
 
     var K = 'ucapan-guru-2026-v3';
-    var defaultWishes = [
-      {
-        n: "Perwakilan Siswa SMA FIBBIS",
-        t: "Happy teacher's Day! Terima kasih sudah menjadi bagian penting dari perjalanan kami dan selalu memberikan ruang bagi kami untuk terus belajar dan berkembang.✨"
-      },
-      {
-        n: "Perwakilan Siswa SMPIT FIBS",
-        t: "Terima kasih untuk setiap ilmu, arahan, dan kesabaran yang sudah Bapak/Ibu berikan. Semoga semua hal baik yang telah diajarkan selalu kami bawa ke mana pun kami melangkah!🌟"
-      }
-    ];
+    var defaultWishes = [];
 
     var currentWishes = [];
 
@@ -5020,7 +5011,7 @@
         .then(function (res) { return res.json(); })
         .then(function (data) {
           if (data && data.ok && Array.isArray(data.wishes)) {
-            var list = data.wishes.length ? data.wishes : defaultWishes.slice();
+            var list = data.wishes.concat(defaultWishes);
             saveLocalWishes(list);
             renderWishes(list);
           }
