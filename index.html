@@ -3061,20 +3061,96 @@
     }
 
     @media (max-width: 640px) {
+      section {
+        padding: 60px 14px;
+      }
+
+      .garden-showcase {
+        padding: 64px 14px 56px;
+      }
+
+      .sec-sub {
+        font-size: 0.88rem;
+        margin-bottom: 24px;
+      }
+
       .video-viewport {
-        aspect-ratio: var(--vr, 4/5);
-        max-height: 80svh;
+        aspect-ratio: var(--vr, 16 / 10);
+        max-height: 75svh;
         border-radius: 16px;
       }
 
       .cinema-stage {
         padding: 10px;
-        border-radius: 24px;
+        border-radius: 22px;
+      }
+
+      .frame-corner {
+        width: 34px;
+        height: 34px;
+      }
+
+      .mg-curtain-overlay {
+        padding: 18px;
+      }
+
+      .mg-play-btn {
+        width: 64px;
+        height: 64px;
+      }
+
+      .mg-play-btn svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .mg-cover-title {
+        margin-top: 14px;
+        font-size: clamp(1.15rem, 4.8vw, 1.5rem);
+      }
+
+      .mg-cover-sub {
+        font-size: 0.74rem;
+        line-height: 1.45;
       }
 
       .video-footer-bar {
         justify-content: center;
         text-align: center;
+      }
+
+      .wish-form input,
+      .wish-form textarea {
+        font-size: 16px;
+        padding: 12px 14px;
+      }
+
+      footer {
+        padding: 36px 16px calc(72px + env(safe-area-inset-bottom, 0px));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .video-viewport {
+        aspect-ratio: var(--vr, 4 / 3);
+      }
+
+      .wish-form {
+        padding: 20px 16px;
+        gap: 14px;
+      }
+
+      .letter-modal {
+        padding: 24px 18px 20px;
+        border-radius: 18px;
+        font-size: 0.9rem;
+        line-height: 1.72;
+        max-height: 86svh;
+      }
+
+      .bgm-btn {
+        width: 42px;
+        height: 42px;
       }
     }
 
@@ -3810,9 +3886,9 @@
 
     .vframe {
       position: relative;
-      width: 100%;
+      width: min(100%, calc(72svh * 16 / 9));
       aspect-ratio: 16 / 9;
-      max-height: 78svh;
+      max-height: 72svh;
       border-radius: 16px;
       overflow: hidden;
       background: #000;
@@ -3874,6 +3950,56 @@
       text-decoration: none;
       color: var(--peach-glow);
       border: 1px solid rgba(254, 215, 184, .35);
+    }
+
+    @media (max-width: 640px) {
+      .vov {
+        padding: 12px max(12px, env(safe-area-inset-right, 12px)) 12px max(12px, env(safe-area-inset-left, 12px));
+      }
+
+      .vbox {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .vframe {
+        border-radius: 12px;
+      }
+
+      .vclose {
+        top: -46px;
+        width: 38px;
+        height: 38px;
+        font-size: 0.92rem;
+      }
+
+      .vhint {
+        margin-top: 8px;
+        font-size: 0.7rem;
+      }
+
+      .vlink {
+        padding: 7px 14px;
+        font-size: 0.74rem;
+      }
+    }
+
+    @media (max-height: 540px) {
+      .vframe {
+        max-height: 74svh;
+        width: min(100%, calc(74svh * 16 / 9));
+      }
+
+      .vclose {
+        top: 8px;
+        right: 8px;
+        z-index: 5;
+        background: rgba(20, 4, 6, .85);
+      }
+
+      .vhint {
+        margin-top: 6px;
+      }
     }
 
     .mg-curtain-overlay {
