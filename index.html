@@ -1626,6 +1626,37 @@
     .pro-flash { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease;
       background: radial-gradient(circle at 50% 50%, #fff4e2 0%, #fed7b8 45%, rgba(254,215,184,0) 82%); }
     .pro.p-flash .pro-flash { opacity: 1; }
+  
+    /* ===== v16: backsound ===== */
+    .bgm-btn { position: fixed; right: max(14px, env(safe-area-inset-right)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 45; width: 46px; height: 46px; border-radius: 50%;
+      border: 1px solid rgba(254,215,184,.3); background: rgba(38,7,10,.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      display: grid; place-items: center; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.4); }
+    .bgm-btn:focus-visible { outline: 2px solid var(--peach-glow); outline-offset: 3px; }
+    .eq { display: flex; align-items: flex-end; gap: 3px; height: 16px; } .eq i { display: block; width: 3px; height: 5px; border-radius: 2px; background: var(--peach-glow); }
+    .bgm-btn.on .eq i { animation: eqB 1s ease-in-out infinite alternate; } .eq i:nth-child(2) { animation-delay: -.4s; } .eq i:nth-child(3) { animation-delay: -.7s; }
+    @keyframes eqB { from { height: 4px; } to { height: 16px; } }
+    .bgm-btn:not(.on)::after { content: ''; position: absolute; width: 26px; height: 2px; border-radius: 2px; background: var(--peach-glow); rotate: -45deg; opacity: .9; }
+    .bgm-hint { position: fixed; right: calc(max(14px, env(safe-area-inset-right)) + 56px); bottom: calc(26px + env(safe-area-inset-bottom, 0px)); z-index: 45; pointer-events: none;
+      font: 500 .72rem/1 'Plus Jakarta Sans', sans-serif; color: var(--peach-glow); background: rgba(38,7,10,.55); border: 1px solid rgba(254,215,184,.25);
+      padding: 8px 12px; border-radius: 999px; backdrop-filter: blur(10px); transition: opacity .6s ease; animation: hintP 2.2s ease-in-out infinite; }
+    @keyframes hintP { 0%, 100% { opacity: .55; } 50% { opacity: 1; } } .bgm-hint.hide { opacity: 0; animation: none; }
+  
+    /* ===== v17: tombol video -> popup Google Drive ===== */
+    .btn-watch { position: relative; z-index: 2; margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border: 0; border-radius: 999px; cursor: pointer;
+      font: 700 .88rem/1 'Plus Jakarta Sans', sans-serif; color: var(--crimson-deep); background: linear-gradient(135deg, #fed7b8, #f3b282); box-shadow: 0 12px 28px rgba(0,0,0,.4); transition: transform .3s ease; }
+    .btn-watch:hover { transform: translateY(-2px); } .mg-curtain-overlay { cursor: pointer; }
+    html.v-lock, html.v-lock body { overflow: hidden; }
+    .vov { position: fixed; inset: 0; z-index: 62; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(14,1,3,.88); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .vov.show { display: flex; animation: vIn .45s ease both; } @keyframes vIn { from { opacity: 0; } }
+    .vbox { position: relative; width: min(96vw, 980px); text-align: center; }
+    .vframe { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 78svh; border-radius: 16px; overflow: hidden; background: #000; box-shadow: 0 30px 70px rgba(0,0,0,.6); margin: 0 auto; }
+    .vframe iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vmsg { position: absolute; inset: 0; display: grid; place-content: center; padding: 20px; color: var(--peach-glow); font-size: .9rem; line-height: 1.7; } .vmsg[hidden], .vlink[hidden] { display: none; }
+    .vclose { position: absolute; top: -52px; right: 0; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(254,215,184,.4); background: rgba(38,7,10,.7); color: var(--peach-glow); font-size: 1rem; cursor: pointer; }
+    .vhint { margin-top: 12px; font-size: .74rem; color: rgba(255,247,239,.7); }
+    .vlink { display: inline-block; margin-top: 8px; padding: 8px 16px; border-radius: 999px; font-size: .78rem; font-weight: 600; text-decoration: none; color: var(--peach-glow); border: 1px solid rgba(254,215,184,.35); }
+  
+    .mg-curtain-overlay { cursor: default; }
   </style>
 </head>
 
@@ -1644,14 +1675,14 @@
   </nav>
 
   <!-- SLIDE 1: LANDING PAGE WITH CHOREOGRAPHED MOTION GRAPHICS & 3D BLOOMING TULIPS -->
-  <header class="ci" id="hr" aria-label="Hari Guru Nasional, Rabu 25  November 2026">
+  <header class="ci" id="hr" aria-label="Hari Guru Nasional, Rabu 25 November 2026">
     <div class="ci-ring r1" aria-hidden="true"></div>
     <div class="ci-ring r2" aria-hidden="true"></div>
     <div class="ci-stage" id="ciStage">
       <span class="ci-eyebrow">Hari Guru Nasional 2026</span>
       <div class="ci-title">
         <h1 style="font:inherit;margin:0"><span class="mk"><span class="l1">Happy</span></span><span class="mk"><span class="l2">Teacher’s Day</span></span></h1>
-        <p class="ci-sub">Rabu, 25  November 2026<span class="dot"> · </span></p>
+        <p class="ci-sub">Rabu, 25 November 2026<span class="dot"> · </span></p>
       </div>
       <div class="ci-box" id="ciBox"><i class="ci-glow"></i><i class="ci-wave w1"></i><i class="ci-wave w2"></i><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:0;left:calc(50% - var(--cw)/2 - 10px);top:-8px;width:22px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:1;right:calc(50% - var(--cw)/2 - 6px);top:34px;width:15px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:2;left:calc(50% - var(--cw)/2 + 6px);bottom:-6px;width:14px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:3;right:calc(50% - var(--cw)/2 - 10px);bottom:-12px;width:24px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:4;left:30%;top:-26px;width:12px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg><svg class="ci-sp" viewBox="0 0 24 24" aria-hidden="true" style="--k:5;right:26%;bottom:-24px;width:12px"><path d="M12 0C13 7 17 11 24 12C17 13 13 17 12 24C11 17 7 13 0 12C7 11 11 7 12 0Z"/></svg>
         <div class="ci-card">
@@ -1737,7 +1768,7 @@
   </section>
 
   <!-- SLIDE 3: VIDEO TRIBUTE WITH MOTION GRAPHIC FRAME -->
-  <section class="rv video-section" id="videoSection">
+  <section class="rv video-section" id="videoSection" data-drive-url="PASTE_LINK_GOOGLE_DRIVE_DI_SINI">
     <h2 class="sec-title">Persembahan Video untuk Guru</h2>
     <p class="sec-sub">Ungkapan rasa cinta, kenangan, dan doa terbaik dari siswa SMA FIBBIS &amp; SMPIT FIBS.</p>
 
@@ -1772,21 +1803,8 @@
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
           <div class="mg-cover-title">Terima Kasih, Pahlawan Tanpa Tanda Jasa</div>
-          <div class="mg-cover-sub">Ketuk untuk memutar video persembahan siswa</div>
+          <div class="mg-cover-sub">Ketuk tombol play untuk menonton video persembahan siswa</div>
         </div>
-
-        <!-- Motion Graphic Title Sequence Transition -->
-        <div class="mg-sequence-intro" id="mgSeqIntro" aria-hidden="true">
-          <div class="mg-seq-text">Selamat Hari Guru Nasional 2026</div>
-          <div class="mg-seq-line"></div>
-          <div class="mg-seq-text" style="font-size: 1.05rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 300;">SMA FIBBIS &amp; SMPIT FIBS</div>
-        </div>
-
-        <!-- HTML5 Video Player (Ganti src dengan file video ucapan guru) -->
-        <video class="tribute-video" id="tributeVideo" controls playsinline preload="metadata">
-          <source src="hari guru-.mp4" type="video/mp4">
-          Browser Anda tidak mendukung pemutar video HTML5.
-        </video>
       </div>
     </div>
   </section>
@@ -1821,7 +1839,7 @@
 
   <footer>
     <em>Selamat Hari Guru Nasional 2026!</em>
-   Copyright © 2026 Arthesva Nirmala All Rights Reserved.
+    © 2026 SMA FIBBIS &amp; SMPIT FIBS — Guru Hebat, Indonesia Kuat.
   </footer>
 
   <!-- FULLSCREEN LETTER MODAL -->
@@ -1829,19 +1847,29 @@
     <div class="letter-modal">
       <div class="letter-modal-head">
         <h3 id="modalTitle">Surat untuk Bapak &amp; Ibu Guru</h3>
-        <span class="modal-date">26  November 2026</span>
+        <span class="modal-date">25 November 2026</span>
       </div>
       <p>Assalamu’alaikum warahmatullahi wabarakatuh,</p>
-      <p>Kepada Para Pahlawan Tanpa Tanda Jasa.</p>
-      <p>Pada peringatan Hari Guru Nasional 2026 ini, kami para siswa/i SMA FIBBIS dan SMPIT FIBS ingin menyampaikan rasa terima kasih dan penghargaan yang sebesar-besarnya atas segala hal yang telah diberikan kepada kami.</p>
-      <p>Terima kasih telah menjadi bagian dari perjalanan kami, bukan hanya melalui ilmu yang diajarkan, tetapi juga melalui setiap nasihat, perhatian, bantuan, dan ketulusan yang mungkin sering kali luput dari pandangan kami. Setiap peran, telah memberikan arti dan menjadi bagian penting dalam perjalanan kami menuntut ilmu dan bertumbuh menjadi pribadi yang lebih baik.</p>
-      <p>Kami menyadari bahwa dalam perjalanan ini, masih banyak sikap dan perilaku kami yang mungkin menguji kesabaran. Untuk itu, kami memohon maaf atas segala kekhilafan dan tutur kata yang kurang berkenan.</p>
-      <p>Semoga setiap kebaikan, pengorbanan, dan keikhlasan yang telah diberikan menjadi amal jariyah yang tak pernah terputus. Semoga Allah SWT senantiasa melimpahkan kesehatan, keberkahan, serta kebahagiaan di dunia dan akhirat. Aamiin..</p>
+      <p>Bapak dan Ibu Guru yang kami muliakan, pada Hari Guru Nasional 2026 ini kami, perwakilan seluruh siswa SMA FIBBIS dan SMPIT FIBS, ingin menyampaikan rasa terima kasih yang paling tulus dari lubuk hati kami.</p>
+      <p>Terima kasih telah sabar mengajari kami membaca, memahami ilmu pengetahuan, dan mengenal makna kehidupan. Terima kasih telah menegur dengan penuh kasih sayang, menyemangati saat kami hampir menyerah, dan selalu mendoakan kami dalam diam.</p>
+      <p>Maafkan atas segala kekhilafan, keterlambatan, dan canda kami yang terkadang menguji kesabaran Bapak dan Ibu. Kami berjanji akan terus belajar dengan sungguh-sungguh, menjaga akhlak mulia, dan menjadi kebanggaan sekolah serta keluarga.</p>
+      <p>Semoga Allah SWT membalas seluruh pengorbanan dan keikhlasan Bapak dan Ibu Guru dengan pahala yang terus mengalir, kesehatan, keberkahan usia, dan kebahagiaan dunia akhirat. Aamiin.</p>
       <p>Wassalamu’alaikum warahmatullahi wabarakatuh.</p>
-      <p class="sg">Dengan penuh hormat &amp; cinta,<br>Seluruh Siswa SMA FIBBIS &amp; SMPIT FIBS</p>
+      <p class="sg">Dengan penuh hormat &amp; cinta,<br>Perwakilan Seluruh Siswa SMA FIBBIS &amp; SMPIT FIBS</p>
       <button class="modal-close-btn" id="cl">Tutup Surat</button>
     </div>
   </div>
+  <div class="vov" id="vOv" role="dialog" aria-modal="true" aria-label="Video persembahan">
+    <div class="vbox">
+      <button class="vclose" id="vClose" type="button" aria-label="Tutup video">✕</button>
+      <div class="vframe"><iframe id="vFrame" title="Video persembahan untuk guru" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div class="vmsg" id="vMsg" hidden><p>Link Google Drive belum diisi.<br>Buka file HTML, cari <b>data-drive-url</b>, lalu tempel link video dari Google Drive.</p></div></div>
+      <p class="vhint">Ketuk ikon layar penuh ⛶ di pojok video untuk menonton lebih besar.</p>
+      <a class="vlink" id="vLink" target="_blank" rel="noopener" hidden>Buka di Google Drive ↗</a>
+    </div>
+  </div>
+  <audio id="bgm" src="backsound.mp3" loop preload="auto"></audio>
+  <button class="bgm-btn" id="bgmBtn" type="button" aria-label="Musik latar" aria-pressed="false"><span class="eq"><i></i><i></i><i></i></span></button>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     /* ============================================================
@@ -2315,43 +2343,26 @@
     }
 
     /* ============================================================
-       4. VIDEO TRIBUTE WITH MOTION GRAPHIC CURTAIN & INTRO TRANSITION
+       4. VIDEO PERSEMBAHAN (Google Drive) -> popup; backsound fade out saat dibuka, fade in saat ditutup
        ============================================================ */
-    var playVideoBtn = document.getElementById('playVideoBtn');
-    var videoCover = document.getElementById('videoCover');
-    var mgSeqIntro = document.getElementById('mgSeqIntro');
-    var tributeVideo = document.getElementById('tributeVideo');
-    var videoFileInput = document.getElementById('videoFileInput');
-
-    if (playVideoBtn && videoCover && mgSeqIntro && tributeVideo) {
-      playVideoBtn.addEventListener('click', function () {
-        videoCover.classList.add('hidden');
-        mgSeqIntro.classList.add('active');
-
-        setTimeout(function () {
-          mgSeqIntro.classList.remove('active');
-          tributeVideo.play().catch(function () {});
-        }, 1600);
-      });
-    }
-
-    if (videoFileInput && tributeVideo) {
-      videoFileInput.addEventListener('change', function (e) {
-        var file = e.target.files && e.target.files[0];
-        if (!file) return;
-        var url = URL.createObjectURL(file);
-        tributeVideo.src = url;
-        tributeVideo.load();
-        if (videoCover) videoCover.classList.add('hidden');
-        if (mgSeqIntro) {
-          mgSeqIntro.classList.add('active');
-          setTimeout(function () {
-            mgSeqIntro.classList.remove('active');
-            tributeVideo.play().catch(function () {});
-          }, 1500);
-        }
-      });
-    }
+    (function () {
+      var sec = document.getElementById('videoSection'), ovl = document.getElementById('vOv'), fr = document.getElementById('vFrame'), msg = document.getElementById('vMsg'),
+          lnk = document.getElementById('vLink'), cls = document.getElementById('vClose'), cover = document.getElementById('playVideoBtn'), root = document.documentElement;
+      if (!sec || !ovl) return;
+      function driveId(u) { var m = (u || '').match(/\/d\/([\w-]{10,})/) || (u || '').match(/[?&]id=([\w-]{10,})/); return m ? m[1] : null; }
+      function openV() {
+        var id = driveId(sec.getAttribute('data-drive-url'));
+        ovl.classList.add('show'); root.classList.add('v-lock');
+        if (id) { fr.src = 'https://drive.google.com/file/d/1OYbI_mJEVwCLnP_y20Zy_YrngWuSUtkD/view?usp=sharing' + id + '/preview'; lnk.href = 'https://drive.google.com/file/d/' + id + '/view'; lnk.hidden = false; msg.hidden = true; }
+        else { fr.removeAttribute('src'); lnk.hidden = true; msg.hidden = false; }
+        if (window.__bgm) window.__bgm.pause();
+      }
+      function closeV() { if (!ovl.classList.contains('show')) return; ovl.classList.remove('show'); root.classList.remove('v-lock'); fr.src = 'about:blank'; if (window.__bgm) window.__bgm.resume(); }
+      if (cover) cover.addEventListener('click', openV);
+      cls.addEventListener('click', closeV);
+      ovl.addEventListener('click', function (e) { if (e.target === ovl) closeV(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeV(); });
+    })();
 
     /* ============================================================
        5. SCROLL REVEAL & ACTIVE NAV HIGHLIGHT
@@ -2383,11 +2394,11 @@
     var defaultWishes = [
       {
         n: "Perwakilan Siswa SMA FIBBIS",
-        t: "Happy teacher's Day! Terima kasih sudah menjadi bagian penting dari perjalanan kami dan selalu memberikan ruang bagi kami untuk terus belajar dan berkembang.✨"
+        t: "Doa terbaik kami selalu menyertai Bapak & Ibu Guru. Semoga Allah senantiasa melimpahkan kesehatan, keberkahan, dan kebahagiaan dunia akhirat."
       },
       {
         n: "Perwakilan Siswa SMPIT FIBS",
-        t: "Terima kasih untuk setiap ilmu, arahan, dan kesabaran yang sudah Bapak/Ibu berikan. Semoga semua hal baik yang telah diajarkan selalu kami bawa ke mana pun kami melangkah!🌟"
+        t: "Selamat Hari Guru Nasional 2026! Terima kasih atas segala ilmu, kesabaran, dan keteladanan yang membuat sekolah terasa seperti rumah kedua bagi kami."
       }
     ];
 
@@ -2460,6 +2471,57 @@
       var v = document.getElementById('tributeVideo'), vp = document.querySelector('.video-viewport'); if (!v || !vp) return;
       function fit() { if (v.videoWidth && v.videoHeight) vp.style.setProperty('--vr', Math.min(1.78, Math.max(.5625, v.videoWidth / v.videoHeight)).toFixed(3)); }
       v.addEventListener('loadedmetadata', fit); if (v.readyState >= 1) fit();
+    })();
+  
+    /* ============================================================
+       BACKSOUND: fade in/out, otomatis mati saat video persembahan diputar, menyala lagi saat selesai
+       ============================================================ */
+    (function () {
+      var a = document.getElementById('bgm'), btn = document.getElementById('bgmBtn'), hint = document.getElementById('bgmHint'),
+          v = document.getElementById('tributeVideo'), cover = document.getElementById('playVideoBtn');
+      if (!a || !btn) return;
+      var TARGET = .5, want = true, started = false, videoOn = false, raf = 0, pauseT = 0, ctx = null, gain = null, vol = 0;
+      a.volume = .5; var useGain = Math.abs(a.volume - .5) > .01; a.volume = 0;          /* iOS: volume read-only -> pakai Web Audio */
+      function setVol(x) { vol = x; if (gain) gain.gain.value = x; else a.volume = Math.max(0, Math.min(1, x)); }
+      function ensureCtx() {
+        if (!useGain || ctx) { if (ctx && ctx.state === 'suspended') ctx.resume(); return; }
+        try { var AC = window.AudioContext || window.webkitAudioContext; ctx = new AC(); gain = ctx.createGain(); gain.gain.value = 0; ctx.createMediaElementSource(a).connect(gain); gain.connect(ctx.destination); if (ctx.state === 'suspended') ctx.resume(); } catch (e) { ctx = null; gain = null; }
+      }
+      function fade(to, ms, done) {
+        cancelAnimationFrame(raf); var from = vol, t0 = performance.now();
+        (function step(t) { var p = Math.min(1, (t - t0) / ms), e = p * p * (3 - 2 * p); setVol(from + (to - from) * e); if (p < 1) raf = requestAnimationFrame(step); else if (done) done(); })(t0);
+      }
+      function ui() { btn.classList.toggle('on', want && !a.paused && !a.muted); btn.setAttribute('aria-pressed', want ? 'true' : 'false'); if (hint) hint.classList.toggle('hide', started); }
+      function play(ms) {
+        if (!want || videoOn) return; ensureCtx(); a.muted = false;
+        var ok = function () { started = true; fade(TARGET, ms || 2500); ui(); }, pr = a.play();
+        if (pr && pr.then) pr.then(ok).catch(function () {}); else ok();
+      }
+      function stop(ms) { fade(0, ms || 1100, function () { a.pause(); ui(); }); }
+
+      /* Mulai: coba autoplay; jika diblokir browser, mulai saat ketukan pertama */
+      function autoStart() {
+        if (!want || videoOn || started) return; ensureCtx();
+        var pr = a.play();
+        if (pr && pr.then) pr.then(function () { started = true; fade(TARGET, 2500); ui(); }).catch(function () {});   /* diblokir browser -> mulai di interaksi pertama */
+      }
+      setVol(0); autoStart();
+      window.addEventListener('load', function () { if (!started && a.paused) autoStart(); });
+      window.addEventListener('pageshow', function () { if (!started && a.paused) autoStart(); });
+      function gesture(e) { if (started || !want || videoOn || btn.contains(e.target)) return; play(2500); }
+      ['pointerdown', 'mousedown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, gesture, { passive: true }); });
+
+      btn.addEventListener('click', function () {
+        if (!started && want) { play(1500); return; }
+        want = !want; if (want) { if (!videoOn) play(1500); } else stop(700); ui();
+      });
+
+      /* Dipanggil popup video Google Drive */
+      window.__bgm = {
+        pause: function () { clearTimeout(pauseT); videoOn = true; if (!a.paused) stop(1100); else ui(); },
+        resume: function () { videoOn = false; if (want) play(2200); else ui(); }
+      };
+      document.addEventListener('visibilitychange', function () { if (document.hidden) a.pause(); else if (started && want && !videoOn) { ensureCtx(); a.play().catch(function () {}); } ui(); });
     })();
   </script>
 </body>
