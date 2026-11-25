@@ -1868,7 +1868,7 @@
       <a class="vlink" id="vLink" target="_blank" rel="noopener" hidden>Buka di Google Drive ↗</a>
     </div>
   </div>
-  <audio id="bgm" src="backsound.mp3" loop preload="auto"></audio>
+  <audio id="bgm" src="backsound.mp3" loop preload="auto" autoplay></audio>
   <button class="bgm-btn" id="bgmBtn" type="button" aria-label="Musik latar" aria-pressed="false"><span class="eq"><i></i><i></i><i></i></span></button>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
@@ -2238,7 +2238,7 @@
       window.addEventListener('touchstart', function (e) { ty = e.touches[0].clientY; }, { passive: true });
       window.addEventListener('touchmove', function (e) { if (!done && ty !== null && ty - e.touches[0].clientY > 14) next(true); }, { passive: true });
       window.addEventListener('keydown', function (e) { if (!done && [' ', 'ArrowDown', 'PageDown', 'End', 'Enter'].indexOf(e.key) > -1) next(true); });
-      document.getElementById('ciGo').addEventListener('click', function () { next(true); });
+      document.getElementById('ciGo').addEventListener('click', function () { next(true); if (window.__bgmPlay) window.__bgmPlay(); });
       window.addEventListener('load', function () { if (!done && window.scrollY > 40) { ci.classList.add('ci-static'); next(true); } });
     })();
 
@@ -2353,7 +2353,7 @@
       function openV() {
         var id = driveId(sec.getAttribute('data-drive-url'));
         ovl.classList.add('show'); root.classList.add('v-lock');
-        if (id) { fr.src = 'https://drive.google.com/file/d/1OYbI_mJEVwCLnP_y20Zy_YrngWuSUtkD/view?usp=sharing' + id + '/preview'; lnk.href = 'https://drive.google.com/file/d/' + id + '/view'; lnk.hidden = false; msg.hidden = true; }
+        if (id) { fr.src = 'https://drive.google.com/file/d/' + id + '/preview?autoplay=1'; lnk.href = 'https://drive.google.com/file/d/' + id + '/view'; lnk.hidden = false; msg.hidden = true; }
         else { fr.removeAttribute('src'); lnk.hidden = true; msg.hidden = false; }
         if (window.__bgm) window.__bgm.pause();
       }
@@ -2499,17 +2499,38 @@
       }
       function stop(ms) { fade(0, ms || 1100, function () { a.pause(); ui(); }); }
 
-      /* Mulai: coba autoplay; jika diblokir browser, mulai saat ketukan pertama */
+      /* Mulai: coba autoplay; fallback ke gesture pertama user */
       function autoStart() {
-        if (!want || videoOn || started) return; ensureCtx();
+        if (!want || videoOn || started) return;
+        ensureCtx();
+        a.muted = false;
         var pr = a.play();
-        if (pr && pr.then) pr.then(function () { started = true; fade(TARGET, 2500); ui(); }).catch(function () {});   /* diblokir browser -> mulai di interaksi pertama */
+        if (pr && pr.then) pr.then(function () { started = true; fade(TARGET, 2500); ui(); }).catch(function () {
+          /* Browser blokir -> tunggu gesture */
+        });
       }
       setVol(0); autoStart();
       window.addEventListener('load', function () { if (!started && a.paused) autoStart(); });
       window.addEventListener('pageshow', function () { if (!started && a.paused) autoStart(); });
-      function gesture(e) { if (started || !want || videoOn || btn.contains(e.target)) return; play(2500); }
-      ['pointerdown', 'mousedown', 'pointerup', 'touchend', 'click', 'keydown'].forEach(function (ev) { window.addEventListener(ev, gesture, { passive: true }); });
+
+      /* Play di gesture pertama: wheel (scroll desktop), touchstart (scroll HP), klik, dsb */
+      var gestureEvents = ['wheel', 'touchstart', 'pointerdown', 'click', 'keydown'];
+      function onFirstGesture() {
+        if (started || !want || videoOn) return;
+        ensureCtx();
+        a.muted = false;
+        var pr = a.play();
+        if (pr && pr.then) {
+          pr.then(function () {
+            started = true; fade(TARGET, 1800); ui();
+            /* Hapus semua listener setelah berhasil */
+            gestureEvents.forEach(function (ev) { window.removeEventListener(ev, onFirstGesture); });
+          }).catch(function () { /* Coba lagi di gesture berikutnya */ });
+        } else {
+          started = true; fade(TARGET, 1800); ui();
+        }
+      }
+      gestureEvents.forEach(function (ev) { window.addEventListener(ev, onFirstGesture, { passive: true }); });
 
       btn.addEventListener('click', function () {
         if (!started && want) { play(1500); return; }
@@ -2521,6 +2542,8 @@
         pause: function () { clearTimeout(pauseT); videoOn = true; if (!a.paused) stop(1100); else ui(); },
         resume: function () { videoOn = false; if (want) play(2200); else ui(); }
       };
+      /* Dipanggil tombol ciGo (Buka surat) — user gesture, 100% dijamin play */
+      window.__bgmPlay = function () { if (!started && want && !videoOn) play(1800); };
       document.addEventListener('visibilitychange', function () { if (document.hidden) a.pause(); else if (started && want && !videoOn) { ensureCtx(); a.play().catch(function () {}); } ui(); });
     })();
   </script>
